@@ -38,6 +38,7 @@ class PlaceholderHelper
   private function format($param) {
     switch (gettype($param)) {
       case 'boolean':
+        return $param ? 'true' : 'false';
       case 'integer':
       case 'double':
         return $param;
