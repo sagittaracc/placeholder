@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use sagittaracc\ItemList;
 use sagittaracc\Map;
 use sagittaracc\PlaceholderHelper;
+use sagittaracc\SimpleList;
 
 final class PlaceholderTest extends TestCase
 {
@@ -30,5 +31,14 @@ final class PlaceholderTest extends TestCase
                 ['field-1' => 'foo 2', 'field-2' => 'bar 2'],
             ],
         ])), '{{foo 0}} some text {{bar 0}},{{foo 1}} some text {{bar 1}},{{foo 2}} some text {{bar 2}}');
+        $this->assertEquals((new PlaceholderHelper("#list{#key some text #value}"))->bindObject(SimpleList::create([
+            'name' => 'list',
+            'separator' => ",\n",
+            'list' => [
+                'foo 1' => 'bar 1',
+                'foo 2' => 'bar 2',
+                'foo 3' => 'bar 3',
+            ]
+        ])), "foo 1 some text bar 1,\nfoo 2 some text bar 2,\nfoo 3 some text bar 3");
     }
 }
