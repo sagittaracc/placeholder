@@ -16,6 +16,7 @@ final class PlaceholderTest extends TestCase
         $this->assertEquals((new PlaceholderHelper("Boolean: ?"))->bind(false), 'Boolean: false');
         $this->assertEquals((new PlaceholderHelper("Integer: ?"))->bind(1), 'Integer: 1');
         $this->assertEquals((new PlaceholderHelper("Array: ?"))->bind([1, 2, 3]), 'Array: [1,2,3]');
+        $this->assertEquals((new PlaceholderHelper("Array: ?, ?"))->setParenthesis('(', ')')->bind([1, 2, 3], [1, 'string']), "Array: (1,2,3), (1,'string')");
         $this->assertEquals((new PlaceholderHelper("Null: ?"))->bind(null), 'Null: NULL');
         $this->assertEquals((new PlaceholderHelper("{{u}}.id, {{ug}}.id, {{g}}.id"))->bindObject(Map::create([
             'u' => 'users',

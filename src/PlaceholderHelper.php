@@ -6,11 +6,14 @@ class PlaceholderHelper
 {
     private $str;
     private $quote;
+    private $openParenthesis;
+    private $closeParenthesis;
 
     function __construct($str)
     {
         $this->setString($str);
         $this->setQuote("'");
+        $this->setParenthesis('[', ']');
     }
 
     public function setString($str)
@@ -25,6 +28,14 @@ class PlaceholderHelper
     {
         if (is_string($quote))
             $this->quote = $quote;
+
+        return $this;
+    }
+
+    public function setParenthesis($openParenthesis, $closeParenthesis)
+    {
+        $this->openParenthesis = $openParenthesis;
+        $this->closeParenthesis = $closeParenthesis;
 
         return $this;
     }
@@ -59,7 +70,7 @@ class PlaceholderHelper
 
             case 'array':
                 return ArrayHelper::isSequential($param)
-                    ? '[' . implode(',', array_map(array($this, 'format'), $param)) . ']'
+                    ? $this->openParenthesis . implode(',', array_map(array($this, 'format'), $param)) . $this->closeParenthesis
                     : '#array';
 
             case 'NULL':
