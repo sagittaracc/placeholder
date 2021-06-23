@@ -41,5 +41,6 @@ final class PlaceholderTest extends TestCase
                 'foo 3' => 'bar 3',
             ]
         ])), "foo 1 some text bar 1,\nfoo 2 some text bar 2,\nfoo 3 some text bar 3");
+        $this->assertEquals((new PlaceholderHelper)->stringOfChar(3)->bind(1, 'string', 3), "1,'string',3");
     }
 }

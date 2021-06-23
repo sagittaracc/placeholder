@@ -9,7 +9,7 @@ class PlaceholderHelper
     private $openParenthesis;
     private $closeParenthesis;
 
-    function __construct($str)
+    function __construct($str = '')
     {
         $this->setString($str);
         $this->setQuote("'");
@@ -21,6 +21,12 @@ class PlaceholderHelper
         if (is_string($str))
             $this->str = $str;
 
+        return $this;
+    }
+
+    public function stringOfChar($count)
+    {
+        $this->setString(implode(',', array_fill(1, $count, '?')));
         return $this;
     }
 
