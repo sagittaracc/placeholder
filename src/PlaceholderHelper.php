@@ -24,9 +24,9 @@ class PlaceholderHelper
         return $this;
     }
 
-    public function stringOfChar($count)
+    public function stringOfChar($count, $char)
     {
-        $this->setString(implode(',', array_fill(1, $count, '?')));
+        $this->setString(implode(',', array_fill(1, $count, $char)));
         return $this;
     }
 
