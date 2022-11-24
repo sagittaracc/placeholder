@@ -49,12 +49,30 @@ class PlaceholderHelper
     public function bind()
     {
         $params = func_get_args();
+        $numArgs = func_num_args();
 
-        foreach ($params as $param) {
-            $this->str = preg_replace('/\?/', $this->format($param), $this->str, 1);
+        if ($numArgs === 1 && is_array($params[0]) && !ArrayHelper::isSequential($params[0])) {
+            $this->bindByNamed($params[0]);
+        }
+        else {
+            $this->bindByUnNamed($params);
         }
 
         return $this->str;
+    }
+
+    private function bindByNamed($param)
+    {
+        foreach ($param as $placeholder => $value) {
+            $this->str = str_replace($placeholder, $this->format($value), $this->str);
+        }
+    }
+
+    private function bindByUnNamed($params)
+    {
+        foreach ($params as $param) {
+            $this->str = preg_replace('/\?/', $this->format($param), $this->str, 1);
+        }
     }
 
     public function bindObject($object)

@@ -10,7 +10,7 @@ use sagittaracc\SimpleList;
 
 final class PlaceholderTest extends TestCase
 {
-    public function testStringPlaceholder(): void
+    public function testPlaceholder(): void
     {
         $this->assertEquals((new PlaceholderHelper("String: ?"))->bind('Yuriy'), "String: 'Yuriy'");
         $this->assertEquals((new PlaceholderHelper("Boolean: ?"))->bind(false), 'Boolean: false');
@@ -18,6 +18,14 @@ final class PlaceholderTest extends TestCase
         $this->assertEquals((new PlaceholderHelper("Array: ?"))->bind([1, 2, 3]), 'Array: [1,2,3]');
         $this->assertEquals((new PlaceholderHelper("Array: ?, ?"))->setParenthesis('(', ')')->bind([1, 2, 3], [1, 'string']), "Array: (1,2,3), (1,'string')");
         $this->assertEquals((new PlaceholderHelper("Null: ?"))->bind(null), 'Null: NULL');
+
+        $this->assertEquals((new PlaceholderHelper("String: %string%; Boolean: -boolean-; Integer: :integer; Array: <array>"))->bind([
+            '%string%' => 'Yuriy',
+            '-boolean-' => false,
+            ':integer' => 1,
+            '<array>' => [1, 2, 3],
+        ]), "String: 'Yuriy'; Boolean: false; Integer: 1; Array: [1,2,3]");
+
         $this->assertEquals((new PlaceholderHelper("{{u}}.id, {{ug}}.id, {{g}}.id"))->bindObject(Map::create([
             'u' => 'users',
             'ug' => 'user_group',
