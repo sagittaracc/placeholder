@@ -10,13 +10,17 @@ use sagittaracc\SimpleList;
 
 final class PlaceholderTest extends TestCase
 {
+    public function test1(): void
+    {
+        $this->assertTrue((new PlaceholderHelper("something ? something"))->hasUnnamedPlaceholder());
+    }
     public function testPlaceholder(): void
     {
         $this->assertEquals((new PlaceholderHelper("String: ?"))->bind('Yuriy'), "String: 'Yuriy'");
         $this->assertEquals((new PlaceholderHelper("Boolean: ?"))->bind(false), 'Boolean: false');
         $this->assertEquals((new PlaceholderHelper("Integer: ?"))->bind(1), 'Integer: 1');
         $this->assertEquals((new PlaceholderHelper("Array: ?"))->bind([1, 2, 3]), 'Array: [1,2,3]');
-        $this->assertEquals((new PlaceholderHelper("Object: :obj"))->bind([':obj' => ['foo' => 'bar']]), 'Object: {"foo":"bar"}');
+        $this->assertEquals((new PlaceholderHelper("Object: ?"))->bind(['foo' => 'bar']), 'Object: {"foo":"bar"}');
         $this->assertEquals((new PlaceholderHelper("Array: ?, ?"))->setParenthesis('(', ')')->bind([1, 2, 3], [1, 'string']), "Array: (1,2,3), (1,'string')");
         $this->assertEquals((new PlaceholderHelper("Null: ?"))->bind(null), 'Null: NULL');
 

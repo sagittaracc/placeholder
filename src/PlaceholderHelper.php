@@ -24,6 +24,11 @@ class PlaceholderHelper
         return $this;
     }
 
+    public function hasUnnamedPlaceholder()
+    {
+        return strpos($this->str, '?') !== false;
+    }
+
     public function stringOfChar($count, $char)
     {
         $this->setString(implode(',', array_fill(1, $count, $char)));
@@ -51,7 +56,7 @@ class PlaceholderHelper
         $params = func_get_args();
         $numArgs = func_num_args();
 
-        if ($numArgs === 1 && is_array($params[0]) && !ArrayHelper::isSequential($params[0])) {
+        if ($numArgs === 1 && is_array($params[0]) && !ArrayHelper::isSequential($params[0]) && !$this->hasUnnamedPlaceholder()) {
             $this->bindByNamed($params[0]);
         }
         else {
