@@ -95,7 +95,7 @@ class PlaceholderHelper
             case 'array':
                 return ArrayHelper::isSequential($param)
                     ? $this->openParenthesis . implode(',', array_map(array($this, 'format'), $param)) . $this->closeParenthesis
-                    : '#array';
+                    : json_encode($param);
 
             case 'NULL':
                 return 'NULL';
